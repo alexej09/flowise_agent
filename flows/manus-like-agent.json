@@ -1,0 +1,120 @@
+{
+  "id": "manus-like-agent",
+  "name": "Manus-ähnlicher KI-Agent",
+  "description": "Ein KI-Agent mit Manus-ähnlichen Funktionen, der Websuche, Textverarbeitung und Konversation unterstützt",
+  "nodes": [
+    {
+      "id": "chatModel",
+      "type": "ChatOpenAI",
+      "position": {
+        "x": 500,
+        "y": 200
+      },
+      "data": {
+        "modelName": "gpt-4o",
+        "temperature": 0.7,
+        "systemMessage": "Du bist ein hilfreicher KI-Assistent, der Aufgaben wie Informationssuche, Textverarbeitung und kreatives Schreiben erledigen kann. Du kannst auf verschiedene Tools zugreifen, um komplexe Aufgaben zu lösen."
+      }
+    },
+    {
+      "id": "memory",
+      "type": "BufferMemory",
+      "position": {
+        "x": 300,
+        "y": 400
+      },
+      "data": {
+        "memoryKey": "chat_history",
+        "inputKey": "input",
+        "outputKey": "output"
+      }
+    },
+    {
+      "id": "webBrowser",
+      "type": "WebBrowser",
+      "position": {
+        "x": 700,
+        "y": 400
+      },
+      "data": {
+        "maxPages": 5,
+        "timeout": 60000
+      }
+    },
+    {
+      "id": "searchTool",
+      "type": "GoogleSearch",
+      "position": {
+        "x": 900,
+        "y": 400
+      },
+      "data": {
+        "apiKey": "{{GOOGLE_API_KEY}}",
+        "searchEngineId": "{{SEARCH_ENGINE_ID}}"
+      }
+    },
+    {
+      "id": "conversationChain",
+      "type": "ConversationChain",
+      "position": {
+        "x": 500,
+        "y": 600
+      },
+      "data": {
+        "memory": "memory",
+        "llm": "chatModel",
+        "tools": ["webBrowser", "searchTool"]
+      }
+    },
+    {
+      "id": "chatInterface",
+      "type": "ChatInterface",
+      "position": {
+        "x": 500,
+        "y": 800
+      },
+      "data": {
+        "conversationChain": "conversationChain",
+        "chatTitle": "Manus-ähnlicher KI-Agent",
+        "chatDescription": "Stellen Sie Fragen, bitten Sie um Informationen oder geben Sie Aufgaben."
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "chatModel",
+      "target": "conversationChain",
+      "sourceHandle": "output",
+      "targetHandle": "llm"
+    },
+    {
+      "source": "memory",
+      "target": "conversationChain",
+      "sourceHandle": "output",
+      "targetHandle": "memory"
+    },
+    {
+      "source": "webBrowser",
+      "target": "conversationChain",
+      "sourceHandle": "output",
+      "targetHandle": "tools"
+    },
+    {
+      "source": "searchTool",
+      "target": "conversationChain",
+      "sourceHandle": "output",
+      "targetHandle": "tools"
+    },
+    {
+      "source": "conversationChain",
+      "target": "chatInterface",
+      "sourceHandle": "output",
+      "targetHandle": "input"
+    }
+  ],
+  "credentials": {
+    "GOOGLE_API_KEY": "",
+    "SEARCH_ENGINE_ID": "",
+    "OPENAI_API_KEY": ""
+  }
+}

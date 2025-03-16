@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lokaler KI-Agent</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="theme-light" data-theme="light">
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-container">
+                <img src="assets/logo.png" alt="KI-Agent Logo" class="logo">
+                <h1>Lokaler KI-Agent</h1>
+            </div>
+            <div class="header-controls">
+                <button id="theme-toggle" class="icon-button" title="Dunkelmodus umschalten">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="settings-button" class="icon-button" title="Einstellungen">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <h2>Navigation</h2>
+                    <button id="sidebar-toggle" class="icon-button" title="Seitenleiste umschalten">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li class="active"><a href="#chat"><i class="fas fa-comment"></i> Chat</a></li>
+                        <li><a href="#flows"><i class="fas fa-project-diagram"></i> Workflows</a></li>
+                        <li><a href="#models"><i class="fas fa-brain"></i> Modelle</a></li>
+                        <li><a href="#tools"><i class="fas fa-tools"></i> Werkzeuge</a></li>
+                        <li><a href="#history"><i class="fas fa-history"></i> Verlauf</a></li>
+                        <li><a href="#settings"><i class="fas fa-cog"></i> Einstellungen</a></li>
+                    </ul>
+                </nav>
+                <div class="sidebar-footer">
+                    <p>Flowise KI-Agent v1.0</p>
+                </div>
+            </aside>
+
+            <!-- Content Area -->
+            <main class="content-area">
+                <!-- Chat View (Default) -->
+                <section id="chat-view" class="view active">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-messages">
+                            <!-- Messages will be added here dynamically -->
+                            <div class="message bot-message">
+                                <div class="message-content">
+                                    <p>Hallo! Ich bin dein lokaler KI-Agent. Wie kann ich dir heute helfen?</p>
+                                </div>
+                                <div class="message-time">Jetzt</div>
+                            </div>
+                        </div>
+                        <div class="chat-input-container">
+                            <div class="chat-toolbar">
+                                <button class="toolbar-button" title="Datei anhängen">
+                                    <i class="fas fa-paperclip"></i>
+                                </button>
+                                <button class="toolbar-button" title="Bild einfügen">
+                                    <i class="fas fa-image"></i>
+                                </button>
+                                <button class="toolbar-button" title="Code einfügen">
+                                    <i class="fas fa-code"></i>
+                                </button>
+                            </div>
+                            <div class="chat-input-wrapper">
+                                <textarea id="chat-input" placeholder="Nachricht eingeben..." rows="1"></textarea>
+                                <button id="send-button" class="send-button" title="Senden">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Other Views (Hidden by Default) -->
+                <section id="flows-view" class="view">
+                    <h2>Workflows</h2>
+                    <div class="flows-container">
+                        <div class="flow-card">
+                            <h3>Manus-ähnlicher Agent</h3>
+                            <p>Ein vorkonfigurierter Workflow mit Manus-ähnlichen Funktionen.</p>
+                            <div class="flow-actions">
+                                <button class="button primary">Bearbeiten</button>
+                                <button class="button secondary">Duplizieren</button>
+                            </div>
+                        </div>
+                        <div class="flow-card add-new">
+                            <i class="fas fa-plus"></i>
+                            <p>Neuen Workflow erstellen</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="models-view" class="view">
+                    <h2>KI-Modelle</h2>
+                    <div class="models-container">
+                        <div class="model-card active">
+                            <div class="model-header">
+                                <h3>GPT-4o</h3>
+                                <span class="model-badge">OpenAI</span>
+                            </div>
+                            <p>Leistungsstarkes multimodales Modell für verschiedene Aufgaben.</p>
+                            <div class="model-actions">
+                                <button class="button primary">Konfigurieren</button>
+                                <button class="button secondary">Als Standard festlegen</button>
+                            </div>
+                        </div>
+                        <div class="model-card">
+                            <div class="model-header">
+                                <h3>Llama 3</h3>
+                                <span class="model-badge">Lokal</span>
+                            </div>
+                            <p>Lokales Modell für verbesserte Privatsphäre und Offline-Nutzung.</p>
+                            <div class="model-actions">
+                                <button class="button primary">Konfigurieren</button>
+                                <button class="button secondary">Als Standard festlegen</button>
+                            </div>
+                        </div>
+                        <div class="model-card add-new">
+                            <i class="fas fa-plus"></i>
+                            <p>Neues Modell hinzufügen</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Settings Modal (Hidden by Default) -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Einstellungen</h2>
+                <button id="close-settings" class="close-button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-tabs">
+                    <button class="tab-button active" data-tab="general">Allgemein</button>
+                    <button class="tab-button" data-tab="models">Modelle</button>
+                    <button class="tab-button" data-tab="api">API</button>
+                    <button class="tab-button" data-tab="advanced">Erweitert</button>
+                </div>
+                <div class="settings-content">
+                    <div id="general-settings" class="tab-content active">
+                        <div class="setting-group">
+                            <h3>Erscheinungsbild</h3>
+                            <div class="setting-item">
+                                <label for="theme-select">Farbschema</label>
+                                <select id="theme-select">
+                                    <option value="light">Hell</option>
+                                    <option value="dark">Dunkel</option>
+                                    <option value="system">Systemeinstellung</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label for="font-size">Schriftgröße</label>
+                                <select id="font-size">
+                                    <option value="small">Klein</option>
+                                    <option value="medium" selected>Mittel</option>
+                                    <option value="large">Groß</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="setting-group">
+                            <h3>Chat-Einstellungen</h3>
+                            <div class="setting-item checkbox">
+                                <input type="checkbox" id="show-timestamps" checked>
+                                <label for="show-timestamps">Zeitstempel anzeigen</label>
+                            </div>
+                            <div class="setting-item checkbox">
+                                <input type="checkbox" id="show-typing" checked>
+                                <label for="show-typing">Tippindikator anzeigen</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Other settings tabs would be here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="button secondary" id="reset-settings">Zurücksetzen</button>
+                <button class="button primary" id="save-settings">Speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
